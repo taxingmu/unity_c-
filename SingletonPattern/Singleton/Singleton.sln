@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractFactory", "..\..\Ab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Builder", "..\..\Builder\Builder.csproj", "{BF30AB97-4CBE-4E84-89B2-0B3AEC41B3D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryMethod", "..\..\FactoryMethod\FactoryMethod.csproj", "{E27EA500-CB94-4C59-B521-BF2CAE403C7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BF30AB97-4CBE-4E84-89B2-0B3AEC41B3D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF30AB97-4CBE-4E84-89B2-0B3AEC41B3D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF30AB97-4CBE-4E84-89B2-0B3AEC41B3D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E27EA500-CB94-4C59-B521-BF2CAE403C7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E27EA500-CB94-4C59-B521-BF2CAE403C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E27EA500-CB94-4C59-B521-BF2CAE403C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E27EA500-CB94-4C59-B521-BF2CAE403C7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
