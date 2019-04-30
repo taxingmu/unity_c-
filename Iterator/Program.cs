@@ -1,200 +1,100 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Generics_CSharp
+namespace Simple
 {
-    // 尖括号中的类型参数 T。
-    //集合和个体类，为自定义类实现迭代，方便按顺序获取对象
-    public class MyList<T> : IEnumerable<T>
+    public class MainEntryPoint
     {
-        protected Node head;
-        protected Node current = null;
-
-        // 嵌套类型也是 T 上的泛型,获取类型
-        protected class Node
+        static int Main(string[] args)
         {
-            public Node next;
-            // T 作为私有成员数据类型。
-            private T data;
-            // 在非泛型构造函数中使用的 T。
-            public Node(T t)
+            Person[] pArray = new Person[]
             {
-                next = null;
-                data = t;
-            }
-            public Node Next
+                new Person("July","Wu"),
+                new Person("Joyn","Wu"),
+                new Person("John","Wu")
+            };
+            foreach (Person i in pArray)
             {
-                get { return next; }
-                set { next = value; }
+                Console.WriteLine(i);
             }
-            // T 作为属性的返回类型。
-            public T Data
-            {
-                get { return data; }
-                set { data = value; }
-            }
-        }
-
-        public MyList()//构造函数先置空
-        {
-            head = null;
-        }
-
-        // T 作为方法参数类型。
-        public void AddHead(T t)
-        {
-            Node n = new Node(t);
-            n.Next = head;
-            head = n;
-        }
-
-        // 实现 GetEnumerator 以返回 IEnumerator<T>，从而启用列表的
-        // foreach 迭代。请注意，在 C# 2.0 中， 
-        // 不需要实现 Current 和 MoveNext。
-        // 编译器将创建实现 IEnumerator<T> 的类。
-        public IEnumerator<T> GetEnumerator()
-        {
-            Node current = head;
-
-            while (current != null)
-            {
-                yield return current.Data;
-                current = current.Next;
-            }
-        }
-
-        // 必须实现此方法，因为
-        // IEnumerable<T> 继承 IEnumerable
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            return 0;
         }
     }
-
-
-    public class SortedList<T> : MyList<T> where T : IComparable<T>
+    //用户类
+    public class Person
     {
-        // 一个未优化的简单排序算法，
-        // 该算法从低到高对列表元素排序：
-        public void BubbleSort()
+        public string firstName;
+        public string lastName;
+        public Person(string firstName, string lastName)
         {
-            if (null == head || null == head.Next)
-                return;
-
-            bool swapped;
-            do
-            {
-                Node previous = null;
-                Node current = head;
-                swapped = false;
-
-                while (current.next != null)
-                {
-                    // 由于需要调用此方法，因此，SortedList
-                    // 类在 IEnumerable<T> 上是受约束的
-                    if (current.Data.CompareTo(current.next.Data) > 0)
-                    {
-                        Node tmp = current.next;
-                        current.next = current.next.next;
-                        tmp.next = current;
-
-                        if (previous == null)
-                        {
-                            head = tmp;
-                        }
-                        else
-                        {
-                            previous.next = tmp;
-                        }
-                        previous = tmp;
-                        swapped = true;
-                    }
-
-                    else
-                    {
-                        previous = current;
-                        current = current.next;
-                    }
-
-                }// end while
-            } while (swapped);
+            this.firstName = firstName;
+            this.lastName = lastName;
         }
-    }
-
-    // 一个将自身作为类型参数来实现 IComparable<T> 的简单类，
-    // 是对象中的，并写出这个对象有什么方法
-    // 常用设计模式，这些对象
-    // 存储在泛型列表中。
-    public class Person : IComparable<Person>
-    {
-        string name;
-        int age;
-
-        public Person(string s, int i)
-        {
-            name = s;
-            age = i;
-        }
-
-        // 这会使列表元素
-        // 按 age 值排序。
-        public int CompareTo(Person p)
-        {
-            return age - p.age;
-        }
-
         public override string ToString()
         {
-            return name + ":" + age;
-        }
-
-        // 必须实现 Equals。
-        public bool Equals(Person p)
-        {
-            return (this.age == p.age);
+            return firstName + " " + lastName;
         }
     }
-
-    class Generics
+    //实现了IEnumerable接口的用户数组的类,迭代
+    public class People : IEnumerable
     {
-        static void Main(string[] args)
+        private Person[] people;
+        public People(Person[] pArray)
         {
-            // 声明并实例化一个新的范型 SortedList 类。
-            // Person 是类型参数。
-            SortedList<Person> list = new SortedList<Person>();
-
-            // 创建 name 和 age 值以初始化 Person 对象。
-            string[] names = new string[] { "Franscoise", "Bill", "Li", "Sandra", "Gunnar", "Alok", "Hiroyuki", "Maria", "Alessandro", "Raul" };
-            int[] ages = new int[] { 45, 19, 28, 23, 18, 9, 108, 72, 30, 35 };
-
-            // 填充列表。
-            for (int x = 0; x < names.Length; x++)
+            people = new Person[pArray.Length];
+            for (int i = 0; i < pArray.Length; i++)
             {
-                list.AddHead(new Person(names[x], ages[x]));
+                people[i] = new Person(pArray[i].firstName, pArray[i].lastName);
             }
-
-            Console.WriteLine("Unsorted List:");
-            // 打印出未排序的列表。
-            foreach (Person p in list)
-            {
-                Console.WriteLine(p.ToString());
-            }
-
-            // 对列表进行排序。
-            list.BubbleSort();
-
-            Console.WriteLine(String.Format("{0}Sorted List:", Environment.NewLine));
-            // 打印出排序的列表。
-            foreach (Person p in list)
-            {
-                Console.WriteLine(p.ToString());
-            }
-
-            Console.WriteLine("Done");
+        }
+        IEnumerator IEnumerable.GetEnumerator()//显示的实现了接口中的GetEnumerator（）方法
+        {
+            return (IEnumerator)GetEnumerator();
+        }
+        public IEnumerator GetEnumerator()//方法的真正实现
+        {
+            return new PeoEnum(people);
         }
     }
+    //枚举IQ
+    public class PeoEnum : IEnumerator
+    {
+        public Person[] people;
+        int position = -1;//当前指向的元素的前面一个元素
+        public PeoEnum(Person[] people)
+        {
+            this.people = people;
+        }
+        public bool MoveNext()//判断是否还有元素
+        {
+            position++;
+            return (position < people.Length);
+        }
+        public void Reset()//重置
+        {
+            position = -1;
+        }
+        object IEnumerator.Current//返回当前元素的对象
+        {
+            get
+            {
+                return Current;
+            }
+        }
+        public Person Current
+        {
+            get
+            {
+                try
+                {
+                    return people[position];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
 
+            }
+        }
+    }
 }

@@ -7,41 +7,69 @@ using System.Threading.Tasks;
 
 namespace Iterator
 {
-    class Class1
+    //迭代器
+    class fruit : IEnumerable
     {
-    }
-    class Fruit : IEnumerable
-    {
-        public List<string> items = new List<string>();
+        public List<Shuiguo> fritus ;
 
-        public Fruit()
+        public fruit()
         {
-            items = null;
+            fritus = null;
         }
-
+       public void  adddH(Shuiguo sss)
+        {
+            fritus.Add(sss);
+        }
         public IEnumerator GetEnumerator()
         {
-            return new  FruitItor();
+            return new FreuitSign(fritus);
         }
     }
-    class FruitItor : IEnumerator
+    public class Shuiguo
     {
-        
-        public  FruitItor()
+        public string name;
+        public string haochi;
+
+        public Shuiguo(string name, string haochi)
         {
-            this;
+            this.name = name;
+            this.haochi = haochi;
+        }
+    }
+    //枚举器
+    class FreuitSign : IEnumerator
+    {
+
+        public List<Shuiguo> fruits;
+        int posi = -1;
+        public Shuiguo current;
+        public Shuiguo next;
+        //object IEnumerator.Current => throw new NotImplementedException();
+
+        public FreuitSign(List<Shuiguo > fruitss)
+        {
+            this.fruits = fruitss;
         }
 
-        public object Current => throw new NotImplementedException();
+       object  IEnumerator. Current{
+           get { return current; }
+         }
 
         public bool MoveNext()
         {
-            throw new NotImplementedException();
+            if (posi > fruits.Count)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            posi = -1;
         }
     }
 }
