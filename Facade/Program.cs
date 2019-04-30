@@ -10,12 +10,7 @@ namespace Facade
     ///四个逻辑层，分别为：用户层UI，业务外观层Business Façade，业务规则层Business Rule，数据访问层Data Access
     //只给需求需要的东西，而不让他们关心这个东西是怎么实现的，实现拿来即用，内部变化并不影响接口变化
     //外观模式简化接口，适配器转换接口。桥接注重分离，装饰则是对象拓展功能
-    class Program
-    {
-        static void Main(string[] args)
-        {
-        }
-    }
+   
     //外观类
  public class Mortgage
  {

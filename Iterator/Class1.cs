@@ -7,14 +7,35 @@ using System.Threading.Tasks;
 
 namespace Iterator
 {
+
+    public class Invo {
+
+        public void InvokeThis()
+        {
+            fruit frui = new fruit();
+            Console.WriteLine("0");
+            Shuiguo aaa = new Shuiguo("ad", "ada");
+            Console.WriteLine("1");
+            Shuiguo aaaa = new Shuiguo("ada", "ada");
+            Console.WriteLine("2");
+            frui.adddH(aaa);
+            frui.adddH(aaaa);
+            foreach(var i in frui)
+            {
+                Console.WriteLine(i.ToString());
+            }
+        }
+    }
+
     //迭代器
     class fruit : IEnumerable
     {
+       
         public List<Shuiguo> fritus ;
 
         public fruit()
         {
-            fritus = null;
+            fritus = new List<Shuiguo>();
         }
        public void  adddH(Shuiguo sss)
         {
@@ -35,6 +56,10 @@ namespace Iterator
             this.name = name;
             this.haochi = haochi;
         }
+        public override string ToString()
+        {
+            return name+haochi;
+        }
     }
     //枚举器
     class FreuitSign : IEnumerator
@@ -52,12 +77,14 @@ namespace Iterator
         }
 
        object  IEnumerator. Current{
-           get { return current; }
+           get { return fruits[posi]; }
          }
 
         public bool MoveNext()
         {
-            if (posi > fruits.Count)
+            Console.WriteLine("ois"+posi+"5");
+            posi++;
+            if (posi > fruits.Count-1)
             {
                 return false;
             }

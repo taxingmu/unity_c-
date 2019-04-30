@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 
-namespace Simple
+namespace Iterator
 {
-    public class MainEntryPoint
+    public class Program
     {
-        static int Main(string[] args)
+        
+        static void  Main(string[] args)
         {
             Person[] pArray = new Person[]
             {
@@ -13,11 +14,13 @@ namespace Simple
                 new Person("Joyn","Wu"),
                 new Person("John","Wu")
             };
+            Invo invo = new Invo();
+            invo.InvokeThis();
             foreach (Person i in pArray)
             {
                 Console.WriteLine(i);
             }
-            return 0;
+             Console.ReadLine();
         }
     }
     //用户类
